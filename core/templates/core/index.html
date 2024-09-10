@@ -1,0 +1,21 @@
+{% extends "core/base.html" %}
+{% block title %}Welcome{% endblock title %}
+
+{% block content %}
+    <div class="w-auto mx-[10%]">
+        So this is the main page <br> <br>
+        Here's like landing page with contact at the end 
+        <br>
+        <br>
+        <br>
+        <p class="font-semibold">
+            {% if request.user.is_authenticated %}
+                Username : {{request.user.username}}
+                <br>
+                Email : {{request.user.email}}
+
+                
+            {% endif %}
+        </p>
+    </div>
+{% endblock content %}

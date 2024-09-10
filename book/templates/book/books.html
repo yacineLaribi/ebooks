@@ -1,0 +1,116 @@
+{% extends 'core/base.html' %}
+
+{% block title %}كتب{% endblock %}
+
+{% block content %}
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    <div class="mx-10 pb-6 grid grid-cols-4  gap-4">
+        <div class="col-span-3">
+            <div class="grid grid-cols-6 place-items-end grid-rows-auto gap-2">
+                {% for book in books %}
+                    <div class="hover:shadow border rounded-xl border-gray-200 w-full h-full relative">
+                        {% if request.user.is_authenticated %}                        
+                            <div class="h-10 w-10 flex items-center justify-center cursor-pointer z-10 rounded-3xl bg-white absolute top-2 right-2 text-indigo-700 hover:text-white hover:bg-indigo-700">
+                                    <button class="favorite-btn flex items-center justify-center" data-book-id="{{ book.id }}">
+                                        <i class="favorite-icon {% if book.id in favorites %}fas fa-heart{% else %}far fa-heart{% endif %}"></i>
+                                    </button>
+                            </div>
+                        {% endif %}
+                        <a href="{% url 'book:detail' book.id %}" class="w-full ">
+                            <div class=" w-full h-[70%]">
+                                <img src="{{ book.image.url }}" class="rounded-t-xl object-cover w-full h-full">
+                            </div>
+    
+                            <div class="h-[30%] p-6 px-2 bg-white rounded-b-xl">
+                                <h2 class="text-end text-xl text-black">{{ book.name }}</h2>
+                                <p class="text-end text-gray-500">الكاتب : {{ book.author }}</p>
+                                <div class="flex items-center mt-2.5 mb-5">
+                                    <div class="flex items-center space-x-1 rtl:space-x-reverse">
+                                        <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                        </svg>
+                                        <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                        </svg>
+                                        <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                        </svg>
+                                        <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                        </svg>
+                                        <svg class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                                        </svg>
+                                    </div>
+                                    <span class=" text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded bg-blue-200  ms-3">5.0</span>
+                                </div>
+                            </div>
+                            
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-span-1">
+            <form method="get" action="{% url 'book:books' %}" class="flex gap-2 flex-row-reverse">
+                <div class="relative w-[500px]">
+                    <input type="search" name="query" id="search-dropdown" class="outline-none block px-2.5 py-3 w-full z-20 text-sm text-end text-black bg-gray-50 rounded-l-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder=" ... إبحث عن كتاب أو كاتب"  />
+                    <button type="submit" class="absolute top-0 start-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-l-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                        <span class="sr-only">Search</span>
+                    </button>
+                </div>
+            </form>
+
+            <hr class="my-6">
+            <div class="flex flex-col items-end">
+
+                <p class="font-bold">تصنيفات</p>
+                
+                <ul class="flex flex-col items-end">
+                    {% for category in categories %}
+                    <li class="py-2 px-2 rounded-xl ">
+                        <a href="{% url 'book:books' %}?query={{ query }}&category={{ category.id }}">{{ category.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script>
+        document.querySelectorAll('.favorite-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const bookId = this.getAttribute('data-book-id');
+                const icon = this.querySelector('.favorite-icon');
+    
+                fetch(`/toggle-favorite/${bookId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.favorite) {
+                        icon.classList.remove('far', 'fa-heart');
+                        icon.classList.add('fas', 'fa-heart');
+                    } else {
+                        icon.classList.remove('fas', 'fa-heart');
+                        icon.classList.add('far', 'fa-heart');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+    
+    
+{% endblock %}

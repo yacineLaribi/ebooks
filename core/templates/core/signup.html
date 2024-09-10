@@ -1,0 +1,76 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block content %}
+
+<div class="flex  flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">    
+    <h2 class="text-center text-3xl font-bold leading-9 tracking-tight ">مرحبا بكم في مجتمعنا</h2>
+    {% comment %} showing errors {% endcomment %}
+    {% if form.errors or form.non_field_errors %}
+        <div class="mt-2 bg-red-400 text-white p-3 rounded-xl border-2 border-rose-500 ">
+            {% for field in form %}
+                {{ field.errors }}
+            {% endfor %}
+  
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+  </div>
+
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form class="space-y-6" action="{% url "core:signup" %}" method="post">
+        {% csrf_token %}
+        <div class="flex justify-between flex-col gap-2">
+          <div>
+            <label for="username" class="block  text-end text-sm font-medium leading-6 ">اسم المستخدم</label>
+            <div class="mt-2">
+              <input id="username" name="username" type="text" autocomplete="username" required class="text-white text-end bg-[#31363F] block w-full rounded-md border-0 py-1.5 px-2 outline-none shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+          </div>
+          <div>
+            <label for="email" class="block text-end text-sm font-medium leading-6 ">بريد إلكتروني</label>
+            <div class="mt-2">
+            <input id="email" name="email" type="email" autocomplete="email" required class="text-white bg-[#31363F] block w-full rounded-md border-0 py-1.5 px-2 outline-none shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-row-reverse justify-between gap-2">
+          <div>
+            <label for="password" class="block text-end text-sm font-medium leading-6 ">كلمة المرور</label>
+            <div class="mt-2">
+              <input id="password1" name="password1" type="password" autocomplete="password" required class=" text-white bg-[#31363F] block w-full rounded-md border-0 py-1.5 px-2 outline-none shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+          </div>
+          <div>
+            <label for="password2" class="block text-end text-sm font-medium leading-6 ">كرر كلمة المرور</label>
+            <div class="mt-2">
+              <input id="password2" name="password2" type="password"  required class="text-white bg-[#31363F] block w-full rounded-md border-0 py-1.5 px-2 outline-none shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            </div>
+          </div>
+        </div>  
+        
+
+
+
+      <label class="flex flex-row-reverse cursor-pointer items-center justify-between p-1 text-slate-400">
+      <div> هل تقبل <a href="{% url "core:terms"%}" class="text-indigo-500">شروط الاستخدام</a> </div>
+      <div class="relative inline-block">
+        <input class="peer h-6 w-12 cursor-pointer appearance-none rounded-full border border-gray-300 bg-gary-400 checked:border-green-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-900 focus-visible:ring-offset-2" type="checkbox" required>
+        <span class="pointer-events-none absolute left-1 top-1 block h-4 w-4 rounded-full bg-slate-600 transition-all duration-200 peer-checked:left-7 peer-checked:bg-green-300"></span>
+      </div>
+    </label>
+      <div>
+        <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 py-1.5 px-3 outline-nonetext-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">سجل الآن</button>
+      </div>
+    </form>
+
+    <p class="mt-10 text-center text-sm text-gray-500">
+      هل أنت عضو بالفعل؟
+      <a href="{% url "core:login" %}" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">تسجيل الدخول</a>
+    </p>
+
+  </div>
+</div>
+{% endblock %}

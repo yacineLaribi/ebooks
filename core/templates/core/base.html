@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta_description %}Hippo - Plateforme éducative médicale offrant des cours en ligne, documents de référence, et ressources pour étudiants en médecine. Rejoignez-nous pour un apprentissage enrichissant et améliorez vos compétences médicales.{% endblock %}" />
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" > 
+     <script src="https://cdn.tailwindcss.com"></script> 
+
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />    
+<title>
+        {% block title %}{%endblock title %} | مكتبتي
+    </title>
+</head>
+<body class="bg-[#FFFFFF] text-black h-[100vh]"  style="font-family: 'El Messiri', sans-serif;">
+
+
+
+<nav class="bg-transparent md:mx-5  mb-20 md:mb-10  z-20 top-0 start-0 border-b  border-gray-600">
+  <div class="max-w-screen-xl flex flex-wrap flex-row-reverse items-center justify-between mx-auto p-4">
+    <a href="{% url "core:index" %}" class="-m-1.5 drop-shadow-2xl drop-shadow-black">
+      <span class="text-3xl font-bold">مكتبتي</span>
+      <img class="h-auto w-[60px] md:w-[70px] md:h-auto object-cover" src="" alt=""> 
+    </a>
+    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+      <div class="hidden md:gap-2 md:flex md:flex-row-reverse ">
+
+
+          {% if not request.user.is_authenticated %}
+          <a href="{% url "core:login" %}">
+          <button type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            دخول
+          </button>
+          </a>
+
+          <a href="{% url "core:signup" %}">
+          <button type="button" class="inline-flex  items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          تسجيل
+          </button>
+          </a>
+          
+        {% else %}
+          <a href="#">
+          <button type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          <i class="fas fa-user"></i>
+          </button>
+          </a>
+          <form action="{% url "core:logout" %}" method="post">
+              {% csrf_token %}
+                      
+              <button type="submit" class="inline-flex items-center rounded-md bg-red-600 px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+                  <i class="fas fa-sign-out-alt"></i>
+              </button>
+        
+          </form>
+          
+        {% endif %}
+      </div>
+      
+
+        <button data-collapse-toggle="navbar-sticky" type="button" id="menu-btn" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+          </svg>
+      </button>
+      
+    </div>
+    
+    <div id="menu-items" class=" items-center justify-between hidden  transition ease duration-1000 w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+      <ul class="bg-gray-900 md:bg-transparent flex items-center justify-center gap-5  flex-col-reverse w-full p-4 md:p-0 mt-4 font-medium border rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row-reverse md:mt-0 md:border-0 bg-transparent ">
+
+        <form  method="get" action="{% url 'book:books' %}" class="w-[100%] mx-auto">
+          <div class="flex flex-row-reverse">
+              <select class="w-20 outline-none bg-gray-50 text-gray-700 border border-gray-300  rounded-r-lg">
+                <option value="mockups">صنف</option>
+                <option value="templates">Templates</option>
+                <option value="design">Design</option>
+                <option value="logos">Logos</option>
+              </select>
+              
+              <div class="relative w-[500px]">
+                  <input type="search" name="query" id="search-dropdown" class="outline-none block px-2.5 py-3 w-full z-20 text-sm text-end text-black bg-gray-50 rounded-l-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder=" ... إبحث عن كتاب أو كاتب" required />
+                  <button type="submit" class="absolute top-0 start-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-l-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                      <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                      </svg>
+                      <span class="sr-only">Search</span>
+                  </button>
+              </div>
+          </div>
+      </form>
+      
+        <div class="md:hidden  flex gap-2">
+        
+
+            {% if not request.user.is_authenticated %}
+            <a href="#">
+            <button type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              دخول
+            </button>
+            </a>
+
+            <a href="#">
+            <button type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              تسجيل
+            </button>
+            </a>
+            
+          {% else %}
+            <a href="#">
+            <button type="button" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <i class="fas fa-user"></i>
+            </button>
+            </a>
+            <form action="{% url "core:logout" %}" method="post">
+                {% csrf_token %}
+                        
+                <button type="submit" class="inline-flex items-center rounded-md bg-red-600 px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+          
+            </form>
+            
+          {% endif %}
+        
+        
+        </div>
+      </ul>
+    </div>
+  
+  </div>
+  
+</nav>
+<div class="messages">
+  {% for message in messages %}
+    <div id="message" class="mx-auto  md:mx-[30%] text-center cursor-pointer bg-green-100 border-t border-b border-green-500 text-green-700 px-4 py-3" role="alert">
+      <p class="font-bold">{{ message }}</p>
+    </div>
+  {% endfor %}
+</div>
+    {% block content %}
+    
+    {% endblock content %}
+<script>
+  const message = document.getElementById('message') ;
+  if (message){
+    message.onclick = ()=>{message.classList.toggle('hidden');}
+
+  }
+  const menuBtn = document.getElementById('menu-btn') ;
+  const menuItems = document.getElementById('menu-items') ;
+  if (menuBtn){
+    menuBtn.onclick = ()=>{
+      menuItems.classList.toggle('hidden');
+      menuItems.classList.toggle('flex');
+    }
+  }
+  {% block script %}
+  
+  {% endblock script %}
+
+
+</script>
+</body>
+</html>
