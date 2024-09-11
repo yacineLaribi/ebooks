@@ -4,8 +4,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.db.models import Count
 
-from .forms import NewBookForm, EditBookForm
-from .models import Category, Book , Favorite
+from .forms import NewBookForm, EditBookForm , ReviewForm
+from .models import Category, Book , Favorite , Review
 
 def books(request):
     query = request.GET.get('query', '')
@@ -41,15 +41,39 @@ def books(request):
 def detail(request, pk):
     book = get_object_or_404(Book, pk=pk)
     related_books = Book.objects.filter(category=book.category).exclude(pk=pk)[0:3]
+    reviews = book.reviews.all()
     favorites = []
 
     if request.user.is_authenticated:
         favorite_books = Favorite.objects.filter(user=request.user).values_list('book_id', flat=True)
         favorites = list(favorite_books)
+
+    user_review = None
+    if request.user.is_authenticated:
+        user_review = Review.objects.filter(book=book, user=request.user).first()
+
+    if request.method == 'POST' and not user_review:
+        if request.user.is_authenticated:
+            form = ReviewForm(request.POST)
+            if form.is_valid():
+                review = form.save(commit=False)
+                review.book = book
+                review.user = request.user
+                review.save()
+                return redirect('book:detail', pk=book.id)
+        else:
+            # Redirect to login if not authenticated
+            return redirect('login')
+    else:
+        form = ReviewForm()
+
     return render(request, 'book/detail.html', {
         'book': book,
         'related_books': related_books , 
         'favorites' : favorites ,
+        'reviews': reviews ,
+        'form': form ,
+        'user_review': user_review,
     })
 
 @login_required

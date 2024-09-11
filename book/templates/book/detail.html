@@ -140,10 +140,57 @@
     </div>
 </div>
 
-<div class="mt-6 px-6 py-12 rounded-xl">
+    <div class="mt-6 px-6 py-12 rounded-xl bg-gray-50">
 
-    <h2 class="mb-12 text-2xl text-center">تقييمات</h2>
+        <h2 class="mb-12 text-2xl text-center">تقييمات</h2>
 
+        <ul class="w-full text-end flex flex-col items-end">
+            {% for review in reviews %}
+            <li class="border-2 p-6 w-[70%] rounded-xl flex flex-col gap-1 mb-5 ">
+                <span class="inline-flex flex-row-reverse gap-2">
+
+                    <strong>:{{ review.user.username }}</strong> 
+
+                    <p class="flex gap-1 justify-end">
+                        {{ review.rating }} 
+                        <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                        </svg>
+                    </p>
+
+                </span>
+
+                <em class="text-end mx-10">{{ review.posted_at }} تم النشر في </em>
+                <p class="text-end mx-10">
+                    {{ review.comment }}
+                </p>
+            </li>
+            {% empty %}
+            <li>لا توجد تعليقات حتى الآن</li>
+            {% endfor %}
+        </ul>
+        
+        {% if user.is_authenticated %}
+            {% if user_review %}
+                <p class="text-end mt-5">لقد قمت بالفعل بتقديم تقييم لهذا الكتاب.</p>
+            {% else %}
+                <form method="POST" class="flex flex-col gap-2 mt-5 items-end justify-center">
+                    {% csrf_token %}
+                    <label for="{{ form.rating.id_for_label }}" class="block text-gray-700 font-bold">
+                         : تقييم
+                    </label>
+                    {{ form.rating }}
+                    <label for="{{ form.comment.id_for_label }}" class="block text-gray-700 font-bold">
+                        : تعليق
+                    </label>
+                    {{ form.comment }}
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">تقييم الأن</button>
+                </form>
+            {% endif %}
+        {% else %}
+            <p class="text-end mt-5">تحتاج إلى <a href="{% url 'core:login' %}" class="text-indigo-700 hover:underline">تسجيل الدخول</a> لتقديم تقييم</p>
+        {% endif %}
+        
     </div>
 
 </div>
