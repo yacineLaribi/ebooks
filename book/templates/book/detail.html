@@ -4,8 +4,32 @@
 
 {% block content %}
 
-<div class="md:mx-[10%] ">
-
+<div class="md:mx-10 ">
+<div class="flex flex-row-reverse gap-2 mt-2 mb-6 ">
+    <p class="hover:underline">
+        <a href="{% url "core:index" %}">
+            الصفحة الرئيسية
+        </a>
+    </p>
+    <i class="fas fa-angle-left"></i>
+    <p class="hover:underline">
+        <a href="{% url "book:books" %}">
+            جميع الكتب
+        </a>
+    </p>
+    <i class="fas fa-angle-left"></i>
+    <p class="hover:underline">
+        <a href="{% url 'book:books' %}?category={{ book.category.id }}">
+            {{book.category}}
+        </a>
+    </p>
+    <i class="fas fa-angle-left"></i>
+    <p class="hover:underline">
+        <a href="#">
+            {{book.name}}
+        </a>
+    </p>
+</div>
 <div class=" grid grid-cols-5 gap-6">
 
 
@@ -95,14 +119,18 @@
             </p>
         {% endif %}
 
-        {% if request.user.is_staff %}
-            <div class="mt-6 p-6  rounded-xl">
-                
+        <div class="mt-6 p-6  rounded-xl">
+            
+            {% if request.user.is_staff %}
 
                 <a href="{% url 'book:delete' book.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-700 hover:bg-red-600 text-white rounded-xl">حذف</a>
                 <a href="{% url 'book:edit' book.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-indigo-700 hover:bg-indigo-600 text-white rounded-xl">تعديل</a>
+            
+            {% endif %}
+
+            <a href="{{book.link}}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-indigo-700 hover:bg-indigo-600 text-white rounded-xl">تحميل الكتاب</a>
+
             </div>
-      {% endif %}
 
     </div>
 

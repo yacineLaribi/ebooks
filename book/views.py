@@ -12,7 +12,7 @@ def books(request):
     category_id = request.GET.get('category', 0)
     books = Book.objects.order_by('?')
     categories = Category.objects.annotate(book_count=Count('books'))
-
+    all_books_count = Book.objects.all().count()
     if category_id:
         books = books.filter(category_id=category_id)
 
@@ -35,6 +35,7 @@ def books(request):
         'categories': categories,
         'category_id': int(category_id) , 
         'favorites': favorites,
+        'all_books_count':all_books_count,
     })
 
 def detail(request, pk):

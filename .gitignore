@@ -1,0 +1,51 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+*.log
+
+# Django stuff
+db.sqlite3
+/media/
+.env
+*.log
+
+# Tailwind CSS
+node_modules/
+public/css/tailwind.css
+public/css/tailwind.min.css
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python virtual environment
+env/
+venv/
+
+# Django migrations
+*.log
+*.pot
+*.pyc
+*~ 
+*.mo
+*.swp
+
+# macOS specific files
+.DS_Store
+Thumbs.db
+
+# JetBrains (PyCharm) specific
+.idea/
+
+# VS Code specific
+.vscode/

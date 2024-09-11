@@ -4,8 +4,36 @@
 
 {% block content %}
     <meta name="csrf-token" content="{{ csrf_token }}">
+<div class="md:mx-10">
 
-    <div class="mx-10 pb-6 grid grid-cols-4  gap-4">
+    <div class="flex flex-row-reverse gap-2 mt-2 mb-6 ">
+                <p class="hover:underline">
+                    <a href="{% url "core:index" %}">
+                        الصفحة الرئيسية
+                    </a>
+                </p>
+                <i class="fas fa-angle-left"></i>
+                <p class="hover:underline">
+                    <a href="{% url "book:books" %}">
+                        جميع الكتب
+                    </a>
+                </p>
+                {% if category_id %}
+                <i class="fas fa-angle-left"></i>
+                <p class="hover:underline">
+                    <a>
+                        {% for category in categories %}
+                            {% if category.id == category_id %}
+                                {{ category.name }}
+                            {% endif %}
+                        {% endfor %}
+                    </a>
+                </p>
+                {% endif %}
+                
+    </div>
+    <div class=" pb-6 grid grid-cols-4  gap-4">
+        
         <div class="col-span-3">
             <div class="grid grid-cols-6 place-items-end grid-rows-auto gap-2">
             {% if books %}
@@ -78,13 +106,13 @@
                 <p class="font-bold">تصنيفات</p>
                 
                 <ul id="category-list" class="flex flex-col items-end">
-                    <li class="py-2 px-2 rounded-xl {% if not category_id %} bg-gray-200{% endif %}">
-                        ({{books.count}})
+                    <li class="py-2 px-2 rounded-xl hover:bg-gray-200 {% if not category_id %} bg-gray-200{% endif %}">
+                        ({{all_books_count}})
                         <a href="{% url 'book:books' %} "> كل التصنيفات </a>
 
                     </li>
                     {% for category in categories %}
-                    <li class="py-2 px-2 rounded-xl {% if category.id == category_id %} bg-gray-200{% endif %} {% if forloop.counter > 9 %}hidden{% endif %}">
+                    <li class="py-2 px-2 rounded-xl {% if category.id == category_id %} bg-gray-200{% endif %} {% if forloop.counter > 9 %}hidden{% endif %} hover:bg-gray-200">
                         ({{ category.book_count }})  
 
                         <a href="{% url 'book:books' %}?query={{ query }}&category={{ category.id }}">{{ category.name }}</a>
@@ -104,6 +132,8 @@
 
 
     </div>
+
+</div>
 
     <script>
         document.querySelectorAll('.favorite-btn').forEach(button => {
