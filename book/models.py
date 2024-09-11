@@ -20,6 +20,14 @@ class Book(models.Model):
 
     posted_at = models.DateTimeField(auto_now_add=True)
     
+
+    # Rating fields  
+    average_rating = models.FloatField(default=0.0)
+    review_count = models.IntegerField(default=0)
+    
+    def total_favorites(self):
+        return Favorite.objects.filter(book=self).count()
+    
     def __str__(self):
         return self.name
 
@@ -39,3 +47,15 @@ class Review(models.Model):
 
     def __str__(self):
         return f'{self.user} - {self.book.name}'
+
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # Update the book's average rating and review count
+        reviews = self.book.reviews.all()
+        total_reviews = reviews.count()
+        total_rating = sum([review.rating for review in reviews])
+        
+        self.book.average_rating = total_rating / total_reviews
+        self.book.review_count = total_reviews
+        self.book.save()
