@@ -1,0 +1,45 @@
+Fiction - خيال
+Non-Fiction - غير خيالي
+Science Fiction - خيال علمي
+Fantasy - فانتازيا
+Biography - سيرة ذاتية
+Autobiography - سيرة ذاتية
+History - تاريخ
+Philosophy - فلسفة
+Psychology - علم النفس
+Religion - دين
+Self-help - تطوير الذات
+Health - صحة
+Business - أعمال
+Economics - اقتصاد
+Education - تعليم
+Technology - تكنولوجيا
+Science - علم
+Poetry - شعر
+Romance - رومانسي
+Thriller - إثارة
+Mystery - غموض
+Horror - رعب
+Children's Books - كتب الأطفال
+Young Adult - اليافعين
+Travel - سفر
+Art - فن
+Music - موسيقى
+Cookbooks - كتب الطبخ
+Comics - قصص مصورة
+Graphic Novels - روايات مصورة
+Adventure - مغامرات
+Classics - كلاسيكيات
+Law - قانون
+Politics - سياسة
+Memoir - مذكرات
+Spirituality - روحانية
+Sports - رياضة
+Anthology - أنثولوجيا
+Criticism - نقد أدبي
+Drama - دراما
+Essays - مقالات
+Short Stories - قصص قصيرة
+War - حرب
+True Crime - جرائم حقيقية
+Travel Guides - أدلة السفر
