@@ -12,8 +12,7 @@ eggs/
 *.log
 
 # Django stuff
-db.sqlite3
-/media/
+
 .env
 *.log
 
