@@ -8,6 +8,8 @@
     <div class="mx-10 pb-6 grid grid-cols-4  gap-4">
         <div class="col-span-3">
             <div class="grid grid-cols-6 place-items-end grid-rows-auto gap-2">
+            {% if books %}
+                
                 {% for book in books %}
                     <div class="hover:shadow-2 border rounded-xl border-gray-200 w-full h-full relative">
                         {% if request.user.is_authenticated %}                        
@@ -50,6 +52,11 @@
                         </a>
                     </div>
                 {% endfor %}
+
+                {% else %}
+                    {% include "core/soonComponent.html" %}
+                {% endif %}
+
             </div>
         </div>
         <div class="col-span-1">
@@ -70,13 +77,27 @@
 
                 <p class="font-bold">تصنيفات</p>
                 
-                <ul class="flex flex-col items-end">
+                <ul id="category-list" class="flex flex-col items-end">
+                    <li class="py-2 px-2 rounded-xl {% if not category_id %} bg-gray-200{% endif %}">
+                        ({{books.count}})
+                        <a href="{% url 'book:books' %} "> كل التصنيفات </a>
+
+                    </li>
                     {% for category in categories %}
-                    <li class="py-2 px-2 rounded-xl ">
+                    <li class="py-2 px-2 rounded-xl {% if category.id == category_id %} bg-gray-200{% endif %} {% if forloop.counter > 9 %}hidden{% endif %}">
+                        ({{ category.book_count }})  
+
                         <a href="{% url 'book:books' %}?query={{ query }}&category={{ category.id }}">{{ category.name }}</a>
                     </li>
                     {% endfor %}
                 </ul>
+                
+                <!-- Show more button -->
+                <button id="show-more-btn" class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">عرض المزيد</button>
+                
+                <!-- Show less button (initially hidden) -->
+                <button id="show-less-btn" class="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 hidden">عرض أقل</button>
+                
             </div>
 
         </div>
@@ -109,6 +130,28 @@
                 })
                 .catch(error => console.error('Error:', error));
             });
+        });
+
+        document.getElementById('show-more-btn').addEventListener('click', function() {
+            const categories = document.querySelectorAll('#category-list li.hidden');
+            categories.forEach(category => category.classList.remove('hidden'));
+            
+            // Hide the 'Show More' button and show the 'Show Less' button
+            this.classList.add('hidden');
+            document.getElementById('show-less-btn').classList.remove('hidden');
+        });
+    
+        document.getElementById('show-less-btn').addEventListener('click', function() {
+            const categories = document.querySelectorAll('#category-list li');
+            categories.forEach((category, index) => {
+                if (index >= 5) {
+                    category.classList.add('hidden');
+                }
+            });
+            
+            // Show the 'Show More' button and hide the 'Show Less' button
+            this.classList.add('hidden');
+            document.getElementById('show-more-btn').classList.remove('hidden');
         });
     </script>
     

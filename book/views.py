@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-
+from django.db.models import Count
 
 from .forms import NewBookForm, EditBookForm
 from .models import Category, Book , Favorite
@@ -10,8 +10,8 @@ from .models import Category, Book , Favorite
 def books(request):
     query = request.GET.get('query', '')
     category_id = request.GET.get('category', 0)
-    categories = Category.objects.all()
     books = Book.objects.order_by('?')
+    categories = Category.objects.annotate(book_count=Count('books'))
 
     if category_id:
         books = books.filter(category_id=category_id)
@@ -25,6 +25,9 @@ def books(request):
     if request.user.is_authenticated:
         favorite_books = Favorite.objects.filter(user=request.user).values_list('book_id', flat=True)
         favorites = list(favorite_books)
+
+
+
 
     return render(request, 'book/books.html', {
         'books': books,
