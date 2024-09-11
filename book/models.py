@@ -15,6 +15,7 @@ class Book(models.Model):
     name = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
+    pages = models.IntegerField(default= 100)
     link= models.URLField()
     image = models.ImageField(upload_to='book_covers', blank=True, null=True) 
 
