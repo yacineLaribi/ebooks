@@ -4,78 +4,157 @@
 
 {% block content %}
 
-<div class="mx-10 grid grid-cols-5 gap-6">
+<div class="md:mx-[10%] ">
 
-    <div class="col-span-1">
-        <img src="{{ book.image.url }}" class="rounded-xl">
-    </div>
+<div class=" grid grid-cols-5 gap-6">
 
-    <div class="col-span-3 p-6 bg-gray-900 rounded-xl">
 
+
+    <div class="relative col-span-4 p-6 bg-gray-50 rounded-xl flex flex-col items-end">
+        {% if request.user.is_authenticated %}
+        <div class="flex flex-row gap-2 absolute top-5 left-5 ">
+
+            <div class="h-10 w-10 flex items-center justify-center gap-2 cursor-pointer z-10 rounded-3xl bg-white   text-indigo-700 hover:text-white hover:bg-indigo-700">
+                    <button class="favorite-btn flex items-center justify-center" data-book-id="{{ book.id }}">
+                        <i class="favorite-icon {% if book.id in favorites %}fas fa-heart{% else %}far fa-heart{% endif %}"></i>
+                    </button>
+                    
+            </div>
+            <div class=" flex items-center justify-center gap-2 cursor-pointer z-10 rounded-xl bg-white   text-indigo-700 hover:text-white hover:bg-indigo-700">
+                <button class="flex items-center flex-row-reverse gap-2 justify-center py-2 px-3" >
+                    <i class="fas fa-share-alt"></i>
+                    
+                       النشر 
+                    
+                </button>
+                
+            </div>
+            <div class=" flex items-center justify-center gap-2 cursor-pointer z-10 rounded-xl bg-white   text-indigo-700 hover:text-white hover:bg-indigo-700">
+                <button class="flex items-center flex-row-reverse gap-2 justify-center py-2 px-3" >
+                    <i class="far fa-star"></i>
+                    
+                       تقييم 
+                    
+                </button>
+                
+            </div>
+        </div>                        
+
+        {% endif %}
         <h1 class="mb-6 text-3xl">{{ book.name }}</h1>
+        <div class="flex items-center justify-center flex-row-reverse gap-[25px]">
+            <div class="flex items-center justify-center mt-2.5 mb-5">
+                <div class="flex items-center space-x-1 rtl:space-x-reverse">
+                    <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                    </svg>
+                    <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                    </svg>
+                    <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                    </svg>
+                    <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                    </svg>
+                    <svg class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                    </svg>
+                </div>
+            </div>
 
-        <p class="text-gray-500"><strong>Author: </strong>{{ book.author }}</p>
-    
+            <div class="flex items-center flex-row-reverse justify-center gap-2">
+                <i class="far fa-comments text-indigo-700"></i>
+                <p>225</p>
+                <p>تعليق</p>
+
+            </div>
+            <div class="flex items-center flex-row-reverse justify-center gap-2">
+                <i class="far fa-heart text-indigo-700"></i>
+                <p>225</p>
+                <p>مفضلة</p>
+
+            </div>
+        </div>
+        <p class="inline-flex flex-row-reverse gap-3 text-gray-500">
+            <strong> : الكاتب</strong>
+            {{ book.author }}
+            
+            <strong> : تاريخ النشر </strong>
+            {{ book.posted_at|date:"Y M d" }}
+        </p>
+
         {% if book.description %}
-            <p class="text-gray-200">
-                <strong class="text-gray-500">Description:</strong><br>
-                {{ book.description }}
+            <p class="inline-flex flex-row-reverse  w-full text-end text-gray-500">
+                <strong class="text-gray-500"> : الوصف</strong>
+                <br>
+                <p class="text-end whitespace-pre-line">
+                    {{ book.description }}
+
+                </p>
             </p>
         {% endif %}
 
         {% if request.user.is_staff %}
-            <div class="mt-6 p-6 bg-gray-700 rounded-xl">
-                <p>You are the admin </p>
+            <div class="mt-6 p-6  rounded-xl">
+                
 
-                <a href="{% url 'book:edit' book.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl">Edit</a>
-                <a href="{% url 'book:delete' book.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl">Delete</a>
+                <a href="{% url 'book:delete' book.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-700 hover:bg-red-600 text-white rounded-xl">حذف</a>
+                <a href="{% url 'book:edit' book.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-indigo-700 hover:bg-indigo-600 text-white rounded-xl">تعديل</a>
             </div>
       {% endif %}
 
     </div>
 
+
+    <div class="w-full col-span-1">
+        <img src="{{ book.image.url }}" class="rounded-xl w-full">
+    </div>
 </div>
 
 <div class="mt-6 px-6 py-12 rounded-xl">
 
     <h2 class="mb-12 text-2xl text-center">الكتب ذات الصلة</h2>
 
-    <div class="grid grid-cols-6 grid-rows-1 gap-3">
+    <div class="flex flex-row-reverse gap-3">
 
         {% for book in related_books %}
 
-            <div class="w-full max-w-sm  grid grid-cols-3 py-2 px-4 border  rounded-lg shadow bg-gray-800 border-gray-700">
-                <a href="{% url 'book:detail' book.id %}">
-                    <img class=" rounded-lg object-contain" src="{{ book.image.url }}" alt="{{book.name}}" />
-                </a>
+            <div class="w-full max-w-sm  grid grid-cols-3 py-2 px-4   rounded-lg bg-gray-50 ">
+                
                 <div class="flex flex-col gap-2 col-span-2 px-5 pb-5">
                     <a href="{% url 'book:detail' book.id %}">
-                        <h5 class="text-xl font-semibold tracking-tight ">{{ book.name }}</h5>
+                        <h5 class="text-xl text-end font-semibold tracking-tight ">{{ book.name }}</h5>
                     </a>
-                    <div class="flex items-center mt-2.5 mb-5">
+                    <div class="flex items-center justify-end">
                         <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                            <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                 <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                             </svg>
-                            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                            <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                 <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                             </svg>
-                            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                            <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                 <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                             </svg>
-                            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                            <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                 <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                             </svg>
                             <svg class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                 <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                             </svg>
                         </div>
-                        <span class=" text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded bg-blue-200  ms-3">5.0</span>
                     </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm font-bold">Author :{{ book.author }}</span>
-                    </div>
+                    <p class="inline-flex flex-row-reverse gap-3 text-gray-500">
+                        <strong> : الكاتب</strong>
+                        {{ book.author }}
+                        
+
+                    </p>
                 </div>
+                <a href="{% url 'book:detail' book.id %}">
+                    <img class=" rounded-lg object-contain" src="{{ book.image.url }}" alt="{{book.name}}" />
+                </a>
             </div>
 
         {% endfor %}
@@ -84,5 +163,33 @@
 
 </div>
 
+</div>
 
+<script>
+    document.querySelectorAll('.favorite-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const bookId = this.getAttribute('data-book-id');
+            const icon = this.querySelector('.favorite-icon');
+
+            fetch(`/toggle-favorite/${bookId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.favorite) {
+                    icon.classList.remove('far', 'fa-heart');
+                    icon.classList.add('fas', 'fa-heart');
+                } else {
+                    icon.classList.remove('fas', 'fa-heart');
+                    icon.classList.add('far', 'fa-heart');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
 {% endblock %}

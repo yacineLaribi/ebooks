@@ -11,7 +11,7 @@ def books(request):
     query = request.GET.get('query', '')
     category_id = request.GET.get('category', 0)
     categories = Category.objects.all()
-    books = Book.objects.filter()
+    books = Book.objects.order_by('?')
 
     if category_id:
         books = books.filter(category_id=category_id)
@@ -37,10 +37,15 @@ def books(request):
 def detail(request, pk):
     book = get_object_or_404(Book, pk=pk)
     related_books = Book.objects.filter(category=book.category).exclude(pk=pk)[0:3]
+    favorites = []
 
+    if request.user.is_authenticated:
+        favorite_books = Favorite.objects.filter(user=request.user).values_list('book_id', flat=True)
+        favorites = list(favorite_books)
     return render(request, 'book/detail.html', {
         'book': book,
-        'related_books': related_books
+        'related_books': related_books , 
+        'favorites' : favorites ,
     })
 
 @login_required
