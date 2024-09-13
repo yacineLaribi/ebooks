@@ -35,7 +35,7 @@
     <div class=" pb-6 grid grid-cols-4  gap-4">
         
         <div class="col-span-3">
-            <div class="grid grid-cols-6 place-items-end grid-rows-auto gap-2">
+            <div class="grid grid-cols-6 place-items-start gap-2">
             {% if books %}
                 
                 {% for book in books %}
@@ -55,7 +55,7 @@
                             <div class="h-[30%] p-6 px-2 bg-white rounded-b-xl">
                                 <h2 class="text-end text-xl text-black">{{ book.name }}</h2>
                                 <p class="text-end text-gray-500">الكاتب : {{ book.author }}</p>
-                                <div class="flex items-center mt-2.5 mb-5">
+                                <div class="flex items-center mb-5">
                                     {% with 5 as total_stars %}
                                     <div class="flex items-center space-x-1 rtl:space-x-reverse">
                                         {% for i in "12345" %}

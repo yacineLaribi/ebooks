@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.db.models import Count
 
 from .forms import NewBookForm, EditBookForm , ReviewForm
-from .models import Category, Book , Favorite , Review
+from .models import Category, Book , Favorite , Review , Author_Details
 
 def books(request):
     query = request.GET.get('query', '')
@@ -135,3 +135,18 @@ def toggle_favorite(request, book_id):
         return JsonResponse({'favorite': False})  # Return status for frontend
     
     return JsonResponse({'favorite': True})
+
+
+def authors(request):
+    query = request.GET.get('query', '')
+    authors = Author_Details.objects.order_by('?')
+
+    if query:
+        authors = authors.filter(Q(name__icontains=query) | Q(description__icontains=query))
+
+
+
+    return render(request , "book/authors.html" , {
+        'authors': authors ,
+        'query': query,
+    })

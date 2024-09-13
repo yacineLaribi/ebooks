@@ -60,3 +60,12 @@ class Review(models.Model):
         self.book.average_rating = total_rating / total_reviews
         self.book.review_count = total_reviews
         self.book.save()
+
+
+
+class Author_Details (models.Model):
+    name = models.CharField(max_length=250 , null= False , blank= False)
+    bio = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='author_pics', blank=True, null=True) 
+    books = models.ManyToManyField( Book, verbose_name="author_book" , blank=True )
+     
