@@ -17,7 +17,7 @@ class Book(models.Model):
     description = models.TextField(blank=True, null=True)
     pages = models.IntegerField(default= 100)
     link= models.URLField()
-    image = models.ImageField(upload_to='book_covers', blank=True, null=True) 
+    image = models.ImageField(upload_to='book_covers',default='40.jpg' ,  blank=True, null=True) 
 
     posted_at = models.DateTimeField(auto_now_add=True)
     
@@ -68,4 +68,10 @@ class Author_Details (models.Model):
     bio = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='author_pics', blank=True, null=True) 
     books = models.ManyToManyField( Book, verbose_name="author_book" , blank=True )
-     
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name_plural = 'Authors'
+    
+    def __str__(self):
+        return self.name
