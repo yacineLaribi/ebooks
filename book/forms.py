@@ -24,7 +24,7 @@ class ReviewForm(forms.ModelForm):
                 'class': 'flex flex-row-reverse gap-2',
             }),
             'comment': forms.Textarea(attrs={
-                'class': 'form-textarea text-end mt-2 w-[50%] border-1 p-6 shadow rounded border-gray-300',
+                'class': 'form-textarea text-end mt-2 w-[95%] md:w-[50%] border-1 p-6 shadow rounded border-gray-300',
                 'placeholder': ' ... اكتب رأيك هنا',
                 'rows': 4,
             }),
