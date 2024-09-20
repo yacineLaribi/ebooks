@@ -1,6 +1,6 @@
 {% extends 'core/base.html' %}
 
-{% block title %}{{ book.name }}{% endblock %}
+{% block title %}{{ author.name }}{% endblock %}
 
 {% block content %}
 
@@ -13,273 +13,59 @@
     </p>
     <i class="fas fa-angle-left"></i>
     <p class="hover:underline">
-        <a href="{% url "book:books" %}">
+        <a href="{% url "book:authors" %}">
             جميع الكتاب
         </a>
     </p>
     <i class="fas fa-angle-left"></i>
-    <p class="hover:underline">
-        <a href="{% url 'book:books' %}?category={{ book.category.id }}">
-            {{book.category}}
+    <p>
+        <a>
+            {{author.name}}
         </a>
     </p>
-    <i class="fas fa-angle-left"></i>
-    <p class="hover:underline">
-        <a href="#">
-            {{book.name}}
-        </a>
-    </p>
+
 </div>
 <div class="flex flex-col-reverse items-center justify-center mt-5 md:mt-auto  md:grid md:grid-cols-5 gap-6">
 
 
 
     <div class="relative w-full md:w-auto  md:col-span-4 p-6 bg-gray-50 rounded-xl flex flex-col items-end">
-        {% if request.user.is_authenticated %}
-        <div class="flex flex-row gap-2 absolute -top-10 md:top-5 left-[50%] -translate-x-[50%] md:left-5 ">
 
-            <div class="h-10 w-10 flex items-center justify-center gap-2 cursor-pointer z-10 rounded-3xl bg-white   text-indigo-700 hover:text-white hover:bg-indigo-700">
-                    <button class="favorite-btn flex items-center justify-center" data-book-id="{{ book.id }}">
-                        <i class="favorite-icon {% if book.id in favorites %}fas fa-heart{% else %}far fa-heart{% endif %}"></i>
-                    </button>
-                    
-            </div>
-            <div class=" flex items-center justify-center gap-2 cursor-pointer z-10 rounded-xl bg-white   text-indigo-700 hover:text-white hover:bg-indigo-700">
-                <button class="flex items-center flex-row-reverse gap-2 justify-center py-2 px-3" >
-                    <i class="fas fa-share-alt"></i>
-                    
-                       النشر 
-                    
-                </button>
-                
-            </div>
-            <div class=" flex items-center justify-center gap-2 cursor-pointer z-10 rounded-xl bg-white   text-indigo-700 hover:text-white hover:bg-indigo-700">
-                <button class="flex items-center flex-row-reverse gap-2 justify-center py-2 px-3" >
-                    <i class="far fa-star"></i>
-                    
-                       تقييم 
-                    
-                </button>
-                
-            </div>
-        </div>                        
+        <h1 class="mb-6 text-3xl">{{ author.name }}</h1>
 
-        {% endif %}
-        <h1 class="mb-6 text-3xl">{{ book.name }}</h1>
-        <div class="flex items-center justify-center flex-wrap  flex-row-reverse gap-2 md:gap-[25px]">
-            <div class="flex items-center justify-center md:mt-2.5 md:mb-5">
-
-                {% with 5 as total_stars %}
-                    <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                        {% for i in "12345" %}
-                            {% if forloop.counter <= book.average_rating %}
-                                <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                                </svg>
-                            {% else %}
-                                <svg class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                                </svg>
-                            {% endif %}
-                        {% endfor %}
-                        <span class="flex items-center justify-center mt-1">
-                            {{ book.average_rating }}
-                        </span>
-                    </div>
-                {% endwith %}
-            
-
-            </div>
-
-            <div class="flex items-center flex-row-reverse justify-center gap-2">
-                <i class="far fa-comments text-indigo-700"></i>
-                <p>{{ book.review_count }}</p>
-                <p>تعليق</p>
-
-            </div>
-            <div class="flex items-center flex-row-reverse justify-center gap-2">
-                <i class="far fa-heart text-indigo-700"></i>
-                <p>{{ book.total_favorites }}</p>
-                <p>مفضلة</p>
-
-            </div>
-
-            <div class="flex items-center flex-row-reverse justify-center gap-2">
-                <i class="far fa-file text-indigo-700"></i>
-                <p>{{ book.pages }}</p>
-                <p>صفحة</p>
-
-            </div>
-        </div>
         <p class="inline-flex flex-row-reverse gap-3 text-gray-500">
             <strong> : الكاتب</strong>
-            {{ book.author }}
-            
-            <strong> : تاريخ النشر </strong>
-            {{ book.posted_at|date:"Y M d" }}
+            {{ author.name }}
+
         </p>
 
-        {% if book.description %}
+        {% if author.bio %}
             <p class="inline-flex flex-row-reverse  w-full text-end text-gray-500">
                 <strong class="text-gray-500"> : الوصف</strong>
                 <br>
                 <p class="text-end whitespace-pre-line">
-                    {{ book.description }}
+                    {{ author.bio }}
 
                 </p>
             </p>
         {% endif %}
 
-        <div class="mt-6 p-6  rounded-xl">
-            
-            {% if request.user.is_staff %}
 
-                <a href="{% url 'book:delete' book.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-700 hover:bg-red-600 text-white rounded-xl">حذف</a>
-                <a href="{% url 'book:edit' book.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-indigo-700 hover:bg-indigo-600 text-white rounded-xl">تعديل</a>
-            
-            {% endif %}
-
-            <a href="{{book.link}}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-indigo-700 hover:bg-indigo-600 text-white rounded-xl">تحميل الكتاب</a>
-
-            </div>
 
     </div>
 
 
     <div class="flex items-center justify-center md:block w-full md:col-span-1">
-        <img src="{{ book.image.url }}" class="rounded-xl  w-[80%] md:w-full">
+        <img src="{{ author.image.url }}" class="rounded-xl  w-[80%] md:w-full">
     </div>
 </div>
 
-    <div class="mt-6 px-6 py-12 rounded-xl bg-gray-50">
 
-        <h2 class="mb-12 text-2xl text-center">تقييمات</h2>
-
-        <ul class="w-full text-end flex flex-col items-end">
-            {% for review in reviews %}
-            <li class="border-2 p-6 w-full md:w-[70%] rounded-xl flex flex-col gap-1 mb-5 ">
-                <span class="inline-flex flex-row-reverse gap-2">
-
-                    <strong>:{{ review.user.username }}</strong> 
-
-                    <p class="flex gap-1 justify-end">
-                        {{ review.rating }} 
-                        <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                        </svg>
-                    </p>
-
-                </span>
-
-                <em class="text-end mx-10">{{ review.posted_at }} تم النشر في </em>
-                <p class="text-end mx-10">
-                    {{ review.comment }}
-                </p>
-            </li>
-            {% empty %}
-            <li>لا توجد تعليقات حتى الآن</li>
-            {% endfor %}
-        </ul>
-        
-        {% if user.is_authenticated %}
-            {% if user_review %}
-                <p class="text-end mt-5">لقد قمت بالفعل بتقديم تقييم لهذا الكتاب.</p>
-            {% else %}
-                <form method="POST" class="flex flex-col gap-2 mt-5 items-end justify-center">
-                    {% csrf_token %}
-                    <label for="{{ form.rating.id_for_label }}" class="block text-gray-700 font-bold">
-                         : تقييم
-                    </label>
-                    {{ form.rating }}
-                    <label for="{{ form.comment.id_for_label }}" class="block text-gray-700 font-bold">
-                        : تعليق
-                    </label>
-                    {{ form.comment }}
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">تقييم الأن</button>
-                </form>
-            {% endif %}
-        {% else %}
-            <p class="text-end mt-5">تحتاج إلى <a href="{% url 'core:login' %}" class="text-indigo-700 hover:underline">تسجيل الدخول</a> لتقديم تقييم</p>
-        {% endif %}
-        
-    </div>
 
 </div>
 
-<div class="md:mx-[5%] mt-6 md:px-6 py-12 rounded-xl">
 
-    <h2 class="mb-12 text-2xl text-center">الكتب ذات الصلة</h2>
-
-    <div class="flex flex-col items-center justify-center md:flex-row-reverse gap-3">
-
-        {% for book in related_books %}
-
-            <div class="w-full max-w-sm hover:shadow shadow-gray-900  grid grid-cols-3 py-2 px-4   rounded-lg bg-gray-50 ">
-                
-                <div class="flex flex-col  gap-2 col-span-2 px-5 pb-5">
-                    <a href="{% url 'book:detail' book.id %}">
-                        <h5 class="text-xl text-end font-semibold tracking-tight ">{{ book.name }}</h5>
-                    </a>
-                    {% with 5 as total_stars %}
-                    <div class="flex items-center justify-end space-x-1 rtl:space-x-reverse">
-                        {% for i in "12345" %}
-                            {% if forloop.counter <= book.average_rating %}
-                                <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                                </svg>
-                            {% else %}
-                                <svg class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                                </svg>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                {% endwith %}
-                    <p class="inline-flex flex-row-reverse gap-3 text-gray-500">
-                        <strong> : الكاتب</strong>
-                        {{ book.author }}
-                        
-
-                    </p>
-                </div>
-                <a href="{% url 'book:detail' book.id %}">
-                    <img class=" rounded-lg object-contain" src="{{ book.image.url }}" alt="{{book.name}}" />
-                </a>
-            </div>
-
-        {% endfor %}
-
-    </div>
 
 </div>
 
-</div>
-
-<script>
-    document.querySelectorAll('.favorite-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const bookId = this.getAttribute('data-book-id');
-            const icon = this.querySelector('.favorite-icon');
-
-            fetch(`/toggle-favorite/${bookId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.favorite) {
-                    icon.classList.remove('far', 'fa-heart');
-                    icon.classList.add('fas', 'fa-heart');
-                } else {
-                    icon.classList.remove('fas', 'fa-heart');
-                    icon.classList.add('far', 'fa-heart');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    });
-</script>
 {% endblock %}

@@ -28,7 +28,7 @@
                 {% for author in authors %}
                     <div class="hover:shadow-2 border rounded-xl border-gray-200 w-full h-full relative">
 
-                        <a href="#" class="w-full ">
+                        <a href="{% url "book:author_detail" author.id %}" class="w-full ">
                             <div class=" w-full h-[70%]">
                                 {% if author.image %}
                                 <img src="{{ author.image.url }}" class="rounded-t-xl object-cover w-full h-full">

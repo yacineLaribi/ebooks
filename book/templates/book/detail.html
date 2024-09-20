@@ -34,9 +34,9 @@
 
 
 
-    <div class="relative w-full md:w-auto  md:col-span-4 p-6 bg-gray-50 rounded-xl flex flex-col items-end">
+    <div class="relative w-full md:w-auto md:self-start  md:col-span-4 p-6 bg-gray-50 rounded-xl flex flex-col items-end">
         {% if request.user.is_authenticated %}
-        <div class="flex flex-row gap-2 absolute -top-10 md:top-5 left-[50%] -translate-x-[50%] md:left-5 ">
+        <div class="flex flex-row gap-2 absolute -top-10 md:top-5 left-[50%] -translate-x-[50%] md:-translate-x-0 md:left-5 ">
 
             <div class="h-10 w-10 flex items-center justify-center gap-2 cursor-pointer z-10 rounded-3xl bg-white   text-indigo-700 hover:text-white hover:bg-indigo-700">
                     <button class="favorite-btn flex items-center justify-center" data-book-id="{{ book.id }}">
@@ -146,7 +146,7 @@
     </div>
 
 
-    <div class="flex items-center justify-center md:block w-full md:col-span-1">
+    <div class="flex items-center justify-center md:self-start md:block w-full md:col-span-1">
         <img src="{{ book.image.url }}" class="rounded-xl  w-[80%] md:w-full">
     </div>
 </div>

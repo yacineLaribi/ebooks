@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.db.models import Count
 
-from .forms import NewBookForm, EditBookForm , ReviewForm
+from .forms import NewBookForm, EditBookForm , ReviewForm , NewAuthorForm , EditAuthorForm
 from .models import Category, Book , Favorite , Review , Author_Details
 
 def books(request):
@@ -137,6 +137,8 @@ def toggle_favorite(request, book_id):
     return JsonResponse({'favorite': True})
 
 
+#! Authors Part 
+
 def authors(request):
     query = request.GET.get('query', '')
     authors = Author_Details.objects.order_by('?')
@@ -149,4 +151,52 @@ def authors(request):
     return render(request , "book/authors.html" , {
         'authors': authors ,
         'query': query,
+    })
+
+
+def author_detail(request, pk):
+    author = get_object_or_404(Author_Details, pk=pk)
+
+    return render(request, 'book/author_detail.html', {
+        'author': author,
+    })
+
+@login_required
+
+def author_new(request):
+    if request.method == 'POST':
+        form = NewAuthorForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            author = form.save(commit=False)
+            author.save()
+
+            return redirect('author:detail', pk=author.id)
+    else:
+        form = NewAuthorForm()
+
+    return render(request, 'book/author_form.html', {
+        'form': form,
+        'title': 'New Author',
+    })
+
+
+@login_required
+
+def author_edit(request, pk):
+    author = get_object_or_404(Author_Details, pk=pk)
+
+    if request.method == 'POST':
+        form = EditAuthorForm(request.POST, request.FILES, instance=author)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('book:author_detail', pk=author.id)
+    else:
+        form = EditAuthorForm(instance=author)
+
+    return render(request, 'book/author_form.html', {
+        'form': form,
+        'title': 'Edit author',
     })

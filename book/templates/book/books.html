@@ -44,7 +44,7 @@
                         {% if request.user.is_authenticated %}                        
                             <div class="h-10 w-10 flex items-center justify-center cursor-pointer z-10 rounded-3xl bg-white absolute top-2 right-2 text-indigo-700 hover:text-white hover:bg-indigo-700">
                                     <button class="favorite-btn flex items-center justify-center" data-book-id="{{ book.id }}">
-                                        <i class="favorite-icon {% if book.id in favorites %}fas fa-heart{% else %}far fa-heart{% endif %}"></i>
+                                        <i class="favorite-icon {% if book.id in favorites %}fas fa-heart fa-lg{% else %}far fa-heart fa-lg{% endif %}"></i>
                                     </button>
                             </div>
                         {% endif %}
@@ -116,11 +116,15 @@
 
                     </li>
                     {% for category in categories %}
-                    <li class="py-2 px-2 rounded-xl {% if category.id == category_id %} bg-gray-200{% endif %} {% if forloop.counter > 9 %}hidden md:block{% endif %}
-                    {% if forloop.counter > 3 %}hidden block md:hidden{% endif %} hover:bg-gray-200">
-                        ({{ category.book_count }})  
+                    <li class="py-2 px-2 rounded-xl 
+                        {% if category.id == category_id %} bg-gray-200{% endif %} 
+                        {% if forloop.counter > 9 %}hidden md:block{% endif %}
+                        {% if forloop.counter > 3 %}block md:hidden{% endif %} 
+                        hover:bg-gray-200">
 
-                        <a href="{% url 'book:books' %}?query={{ query }}&category={{ category.id }}">{{ category.name }}</a>
+                            ({{ category.book_count }})  
+                            <a href="{% url 'book:books' %}?query={{ query }}&category={{ category.id }}">{{ category.name }}</a>
+
                     </li>
                     {% endfor %}
                 </ul>

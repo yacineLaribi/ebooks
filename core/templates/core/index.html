@@ -1,21 +1,33 @@
 {% extends "core/base.html" %}
+{% load static %}
 {% block title %}Welcome{% endblock title %}
 
 {% block content %}
-    <div class="w-auto mx-[10%]">
-        So this is the main page <br> <br>
-        Here's like landing page with contact at the end 
-        <br>
-        <br>
-        <br>
-        <p class="font-semibold">
-            {% if request.user.is_authenticated %}
-                Username : {{request.user.username}}
-                <br>
-                Email : {{request.user.email}}
 
-                
-            {% endif %}
-        </p>
+    <div class="h-[100vh] mx-2 md:mx-auto fixed top-[0]">
+        <section class="h-full rounded-2xl flex items-center justify-center " >
+            <div class="content h-full w-full md:w-[60%] col-span-2 flex items-center justify-center gap-5 flex-col">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-center"> <span class="text-indigo-700 font-bold">مكتبتي</span> 
+                    أكبر منصة 
+                    <span class="relative inline-block">
+                        <span>🇩🇿</span>
+                    </span>
+                    للكتب الرقمية 
+                </h1>
+                <p class="text-sm md:text-lg text-gray-700 text-center leading-relaxed mt-5 ">
+                    مكتبتي هي منصة إلكترونية متخصصة في الكتب الرقمية (الكتب الإلكترونية)،
+                    تتيح للمستخدمين الوصول إلى مجموعة واسعة من الكتب في مختلف المجالات. 
+                    من خلال "مكتبتي"،
+                    يمكن للمستخدمين استعراض، قراءة، وتحميل الكتب بسهولة من أي مكان وفي أي وقت. 
+                    تهدف المنصة إلى تسهيل الوصول إلى المعرفة وتشجيع القراءة عبر الوسائط الرقمية.
+                </p>
+                <div class="flex items-center justify-center gap-2">
+                    <a href="{% url "book:authors" %}" class="py-4 px-10 rounded-3xl bg-indigo-700 hover:bg-indigo-600  text-white"> البحث عن الكتاب</a>
+                    
+                    <a href="{% url "book:books" %}" class="py-4 px-10 rounded-3xl bg-indigo-700 hover:bg-indigo-600  text-white">ابدأ القراءة</a>
+
+                </div>
+            </div>
+        </section>
     </div>
 {% endblock content %}
