@@ -11,11 +11,12 @@ class Category(models.Model):
         return self.name
 
 class Book(models.Model):
-    category = models.ForeignKey(Category, related_name='books', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name='books', on_delete=models.CASCADE , blank=True , null=True)
+    subject = models.CharField(max_length=255 , blank=True , null = True ) 
     name = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    pages = models.IntegerField(default= 100)
+    pages = models.IntegerField(blank=True , null=True)
     link= models.URLField()
     image = models.ImageField(upload_to='book_covers',  blank=True, null=True) 
     image_url = models.URLField(null=True , blank=True)

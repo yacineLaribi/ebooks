@@ -103,13 +103,14 @@
                 <p>مفضلة</p>
 
             </div>
+            {% if book.pages %}
+                <div class="flex items-center flex-row-reverse justify-center gap-2">
+                    <i class="far fa-file text-indigo-700"></i>
+                    <p>{{ book.pages }}</p>
+                    <p>صفحة</p>
 
-            <div class="flex items-center flex-row-reverse justify-center gap-2">
-                <i class="far fa-file text-indigo-700"></i>
-                <p>{{ book.pages }}</p>
-                <p>صفحة</p>
-
-            </div>
+                </div>
+            {% endif %}
         </div>
         <p class="inline-flex flex-row-reverse gap-3 text-gray-500">
             <strong> : الكاتب</strong>
@@ -147,7 +148,13 @@
 
 
     <div class="flex items-center justify-center md:self-start md:block w-full md:col-span-1">
+        {% if book.image %}
         <img src="{{ book.image.url }}" class="rounded-xl  w-[80%] md:w-full">
+        
+        {% else %}
+        <img src="{{ book.image_url }}" class="rounded-xl  w-[80%] md:w-full">
+        
+        {% endif %}
     </div>
 </div>
 
@@ -243,7 +250,12 @@
                     </p>
                 </div>
                 <a href="{% url 'book:detail' book.id %}">
+                    {% if book.image %}
                     <img class=" rounded-lg object-contain" src="{{ book.image.url }}" alt="{{book.name}}" />
+                    
+                    {% else %}
+                    <img class=" rounded-lg object-contain" src="{{ book.image_url }}" alt="{{book.name}}" />
+                    {% endif %}
                 </a>
             </div>
 
