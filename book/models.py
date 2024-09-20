@@ -17,8 +17,8 @@ class Book(models.Model):
     description = models.TextField(blank=True, null=True)
     pages = models.IntegerField(default= 100)
     link= models.URLField()
-    image = models.ImageField(upload_to='book_covers',default='40.jpg' ,  blank=True, null=True) 
-
+    image = models.ImageField(upload_to='book_covers',  blank=True, null=True) 
+    image_url = models.URLField(null=True , blank=True)
     posted_at = models.DateTimeField(auto_now_add=True)
     
 
