@@ -17,10 +17,5 @@
             "src": "/(.*)",
             "dest": "config/wsgi.py"
         }
-    ],
-    "functions": {
-        "config/wsgi.py": {
-            "runtime": "python3.9"
-        }
-    }
+    ]
 }
