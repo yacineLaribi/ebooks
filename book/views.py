@@ -7,36 +7,54 @@ from django.db.models import Count
 from .forms import NewBookForm, EditBookForm , ReviewForm , NewAuthorForm , EditAuthorForm
 from .models import Category, Book , Favorite , Review , Author_Details
 
+from django.core.paginator import Paginator
+from django.http import JsonResponse
+
 def books(request):
     query = request.GET.get('query', '')
     category_id = request.GET.get('category', 0)
+    page = request.GET.get('page', 1)  # Get the current page number
     books = Book.objects.order_by('?')
     categories = Category.objects.annotate(book_count=Count('books'))
     all_books_count = Book.objects.all().count()
+
     if category_id:
         books = books.filter(category_id=category_id)
 
     if query:
         books = books.filter(Q(name__icontains=query) | Q(description__icontains=query))
 
+    # Paginate the books queryset
+    paginator = Paginator(books, 18)  
+    books = paginator.get_page(page)
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        books_data = [
+            {
+                'id': book.id,
+                'name': book.name,
+                'author': book.author,
+                'image_url': book.image.url if book.image else book.image_url,
+                'average_rating': book.average_rating
+            }
+            for book in books
+        ]
+        return JsonResponse({'books': books_data, 'has_next': books.has_next()})
 
     favorites = []
-
     if request.user.is_authenticated:
         favorite_books = Favorite.objects.filter(user=request.user).values_list('book_id', flat=True)
         favorites = list(favorite_books)
-
-
-
 
     return render(request, 'book/books.html', {
         'books': books,
         'query': query,
         'categories': categories,
-        'category_id': int(category_id) , 
+        'category_id': int(category_id),
         'favorites': favorites,
-        'all_books_count':all_books_count,
+        'all_books_count': all_books_count,
     })
+
 
 def detail(request, pk):
     book = get_object_or_404(Book, pk=pk)

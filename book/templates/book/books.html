@@ -36,7 +36,7 @@
     <div class="flex flex-col-reverse pb-6 md:grid md:grid-cols-4  gap-4">
         
         <div class="md:col-span-3">
-            <div class="grid grid-cols-2 md:grid-cols-6 place-items-start gap-1 md:gap-2">
+            <div class="books-container grid grid-cols-2 md:grid-cols-6 place-items-start gap-1 md:gap-2">
             {% if books %}
                 
                 {% for book in books %}
@@ -62,29 +62,6 @@
                             <div class="h-[30%] p-6 px-2 bg-white rounded-b-xl">
                                 <h2 class="text-end text-xl text-black">{{ book.name }}</h2>
                                 <p class="text-end text-gray-500">الكاتب : {{ book.author }}</p>
-                                <div class="flex items-center mb-5">
-                                    {% with 5 as total_stars %}
-                                    <div class="flex items-center space-x-1 rtl:space-x-reverse">
-                                        {% for i in "12345" %}
-                                            {% if forloop.counter <= book.average_rating %}
-                                                <svg class="w-4 h-4 text-indigo-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                                                </svg>
-                                            {% else %}
-                                                <svg class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                                                </svg>
-                                            {% endif %}
-                                        {% endfor %}
-                                        <span class="flex items-center justify-center mt-1">
-                                            {{ book.average_rating }}
-                                        </span>
-                                    </div>
-                                {% endwith %}
-                                <span class=" text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded bg-blue-200  ms-3">
-                                    {{ book.average_rating }}
-                                    </span>
-                                </div>
                             </div>
                             
                         </a>
@@ -97,6 +74,7 @@
 
             </div>
         </div>
+
         <div class="md:col-span-1">
             <form method="get" action="{% url 'book:books' %}" class="flex gap-2 flex-row-reverse">
                 <div class="relative w-[500px]">
@@ -148,6 +126,60 @@
     </div>
 
 </div>
+<script>
+    let currentPage = 1;
+    let loading = false;
+    const loadMoreBooks = () => {
+        if (loading) return;
+        loading = true;
+        currentPage++;
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('page', currentPage);
+        fetch(`?${urlParams.toString()}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            const booksContainer = document.querySelector('.books-container');
+            data.books.forEach(book => {
+                const bookElement = `
+                    <div class="hover:shadow-2 border rounded-xl border-gray-200 w-full text-xs md:text-md h-[90%] md:h-full relative">
+                        <a href="/book/${book.id}" class="w-full">
+                            <div class="w-full h-[60%] md:h-[70%]">
+                                <img src="${book.image_url}" class="rounded-t-xl object-cover w-full h-full">
+                            </div>
+                            <div class="h-[30%] p-6 px-2 bg-white rounded-b-xl">
+                                <h2 class="text-end text-xl text-black">${book.name}</h2>
+                                <p class="text-end text-gray-500">الكاتب : ${book.author}</p>
+                                <span class=" text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded bg-blue-200 ms-3">${book.average_rating}</span>
+                            </div>
+                        </a>
+                    </div>`;
+                booksContainer.insertAdjacentHTML('beforeend', bookElement);
+            });
+            loading = false;
+            if (!data.has_next) {
+                document.removeEventListener('scroll', handleScroll);
+            }
+        })
+        .catch(error => console.error('Error loading more books:', error));
+    };
+
+    const handleScroll = () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const windowHeight = window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight;
+        if (scrollTop + windowHeight >= docHeight - 200) {
+            loadMoreBooks();
+        }
+    };
+
+    document.addEventListener('scroll', handleScroll);
+</script>
+
+
 
     <script>
         document.querySelectorAll('.favorite-btn').forEach(button => {
