@@ -48,3 +48,7 @@ Thumbs.db
 
 # VS Code specific
 .vscode/
+
+
+db.sqlite3
+
