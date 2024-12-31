@@ -1,6 +1,6 @@
-You're right. `icontains` is a basic search method that doesn't handle typos or partial matches well. If you're looking for more **forgiving** search behavior, where it can handle misspellings, partial words, or more flexible keyword searching, you'll need a more robust search solution than `icontains`.
+The most common method used in Django as a search engine is `icontains`  a basic search method that doesn't handle typos or partial matches well. If you're looking for more **forgiving** search behavior, where it can handle misspellings, partial words, or more flexible keyword searching, you'll need a more robust search solution than `icontains`.
 
-Here's a few more **advanced** options that could handle these situations better:
+A few more **advanced** options that could handle these situations better include:
 
 ### 1. **Trigram Similarity (PostgreSQL)**
 
@@ -195,5 +195,3 @@ def search_results(request):
 - **Elasticsearch**: Best for large projects that need powerful, flexible, and scalable search capabilities (similar to Typesense).
 
 ---
-
-Let me know if you need further assistance setting up any of these methods!
